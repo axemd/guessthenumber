@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-int readNumber(int i = 1, int t = 100)
+﻿int readNumber(int i = 1, int t = 100)
 {
     var toAnalyze = Console.ReadLine();
     bool isNumber = int.TryParse(toAnalyze, out _);
@@ -18,9 +17,9 @@ while (ans == "o")
     int e = readNumber();
     bool intervalDirection = s < e;
     int r;
-    while(s == e)
+    while(s == e || s < 0 || e < 0)
     {
-        Console.WriteLine("Cet intervalle est refusé (mêmes valeurs).");
+        Console.WriteLine("Cet intervalle est refusé, merci de renseigner deux valeurs différentes et supérieures ou égales à 0.");
         Console.WriteLine("Choisissez le nombre de départ (ou d'arrivée).");
         s = readNumber();
         Console.WriteLine("Choisissez l'autre limite de l'intervalle.");
@@ -39,7 +38,7 @@ while (ans == "o")
         Console.WriteLine("Intervalle : [" + e.ToString() + ", " + s.ToString() + "]");
         r = rdm.Next(e, s);
     }
-    int n = readNumber((s > e) ? s : e, (s < e) ? e : s);
+    int n = readNumber((intervalDirection) ? s : e, (intervalDirection) ? e : s);
     while (n != r)
     {
         if (n == -1) // Voir solution
@@ -48,16 +47,14 @@ while (ans == "o")
         }
         if (n < r)
         {
-            Console.WriteLine("+ haut");
+            Console.WriteLine(((intervalDirection) ? n < s : n < e) ? "Nombre en dessous de l'intervalle" : "Plus haut");
         }
         else
         {
-            Console.WriteLine("+ bas");
+            Console.WriteLine(((intervalDirection) ? n > e : n > s) ? "Nombre au dessus de l'intervalle" : "Plus bas");
         }
-        n = readNumber((s > e) ? s : e, (s < e) ? e : s);
+        n = readNumber((intervalDirection) ? s : e, (intervalDirection) ? e : s);
     }
     Console.WriteLine("Félicitations ! Voulez-vous rejouer ? (o/n)");
     ans = Console.ReadLine();
 }
-
-// A faire : while pour le haha très drôle
